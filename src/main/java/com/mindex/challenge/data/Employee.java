@@ -1,6 +1,7 @@
 package com.mindex.challenge.data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Employee {
     private String employeeId;
@@ -8,7 +9,7 @@ public class Employee {
     private String lastName;
     private String position;
     private String department;
-    private List<Employee> directReports;
+    private List<String> directReports;
 
     public Employee() {
     }
@@ -53,11 +54,11 @@ public class Employee {
         this.department = department;
     }
 
-    public List<Employee> getDirectReports() {
-        return directReports;
-    }
+    public List<String> getDirectReports() { return directReports; }
 
-    public void setDirectReports(List<Employee> directReports) {
-        this.directReports = directReports;
+    public void setDirectReports(List<Employee> directReports) {    // TODO: Use custom mapper for this?
+        this.directReports = directReports.stream()
+                .map(Employee::getEmployeeId)
+                .collect(Collectors.toList());
     }
 }
