@@ -41,7 +41,7 @@ public class EmployeeServiceImplTest {
         employeeUrl = "http://localhost:" + port + "/employee";
         employeeIdUrl = "http://localhost:" + port + "/employee/{id}";
     }
-    //localhost:8080/employee
+
     @Test
     public void testCreateReadUpdate() {
         Employee testEmployee = new Employee();
@@ -49,7 +49,7 @@ public class EmployeeServiceImplTest {
         testEmployee.setLastName("Doe");
         testEmployee.setDepartment("Engineering");
         testEmployee.setPosition("Developer");
-        testEmployee.setDirectReports(new ArrayList<>());
+        testEmployee.setDirectReports(new ArrayList<>());   // TODO: Why does the test fail without this?
 
         // Create checks
         Employee createdEmployee = restTemplate.postForEntity(employeeUrl, testEmployee, Employee.class).getBody();

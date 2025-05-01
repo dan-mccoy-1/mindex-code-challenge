@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Compensation {
     private float salary;
     private LocalDate effectiveDate;
-    private Employee employee;
+    private String employeeId;
 
     public Compensation() {
     }
@@ -18,7 +18,7 @@ public class Compensation {
         this.salary = salary;
     }
 
-    public LocalDate getEffectiveDate() {    // TOD: Make this a LocalDate or LocalDateTime?
+    public LocalDate getEffectiveDate() {
         return effectiveDate;
     }
 
@@ -26,9 +26,11 @@ public class Compensation {
         this.effectiveDate = (effectiveDate != null) ? effectiveDate : LocalDate.now();
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeId(Employee employee) { this.employee = employee; }
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
 }
