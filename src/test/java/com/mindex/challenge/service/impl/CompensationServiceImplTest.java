@@ -30,7 +30,7 @@ public class CompensationServiceImplTest {
 
     private String compensationUrl;
     private String compensationEmployeeIdUrl;
-    
+
     @Autowired
     private CompensationService compensationService;
 
@@ -64,25 +64,10 @@ public class CompensationServiceImplTest {
 
 
         // Read checks
-//        Employee readEmployee = restTemplate.getForEntity(compensationUrl, Compensation.class, createdEmployee.getEmployeeId()).getBody();
-//        assertEquals(createdEmployee.getEmployeeId(), readEmployee.getEmployeeId());
-//        assertEmployeeEquivalence(createdEmployee, readEmployee);
-//
-//
-//        // Update checks
-//        readEmployee.setPosition("Development Manager");
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//        Employee updatedEmployee =
-//                restTemplate.exchange(compensationEmployeeIdUrl,
-//                        HttpMethod.PUT,
-//                        new HttpEntity<Employee>(readEmployee, headers),
-//                        Employee.class,
-//                        readEmployee.getEmployeeId()).getBody();
-//
-//        assertEmployeeEquivalence(readEmployee, updatedEmployee);
+        Compensation readCompensation = restTemplate.getForEntity(compensationEmployeeIdUrl, Compensation.class, createdCompensation.getEmployeeId()).getBody();
+        assert readCompensation != null;
+        assertEquals(createdCompensation.getEmployeeId(), readCompensation.getEmployeeId());
+        assertCompensationEquivalence(createdCompensation, readCompensation);
     }
 
     private static void assertCompensationEquivalence(Compensation expected, Compensation actual) {
