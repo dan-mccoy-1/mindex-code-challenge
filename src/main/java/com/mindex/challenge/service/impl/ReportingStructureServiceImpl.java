@@ -24,7 +24,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     }
 
     @Override
-    public ReportingStructure get(String employeeId) {
+    public ReportingStructure generate(String employeeId) {
         LOG.debug("Creating reportingStructure [{}]", employeeId);
 
         ReportingStructure reportingStructure = new ReportingStructure();

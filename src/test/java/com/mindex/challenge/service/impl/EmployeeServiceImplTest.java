@@ -39,7 +39,7 @@ public class EmployeeServiceImplTest {
         employeeUrl = "http://localhost:" + port + "/employee";
         employeeIdUrl = "http://localhost:" + port + "/employee/{id}";
     }
-
+    //localhost:8080/employee
     @Test
     public void testCreateReadUpdate() {
         Employee testEmployee = new Employee();
