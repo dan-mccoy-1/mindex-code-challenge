@@ -28,10 +28,16 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
 
         ReportingStructure reportingStructure = new ReportingStructure();
 
-        reportingStructure.setEmployee(employeeServiceImpl.read(employeeId));
+        Employee employee = employeeServiceImpl.read(employeeId);
+        reportingStructure.setEmployee(employee);
 
-        List<Employee> allReports = listAllReports(reportingStructure.getEmployee().getDirectReports(), null);
-        reportingStructure.setNumberOfReports(allReports.size());
+        int numberOfReports ;
+        if(employee.getDirectReports() != null && !employee.getDirectReports().isEmpty()) {
+            reportingStructure.setNumberOfReports(listAllReports(employee.getDirectReports(), null).size());
+        } else {
+            reportingStructure.setNumberOfReports(0);
+        }
+
 
         return reportingStructure;
     }
