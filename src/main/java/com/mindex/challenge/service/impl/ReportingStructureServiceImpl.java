@@ -37,19 +37,15 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     }
 
     private List<Employee> listAllReports(List<Employee> directReports, List<Employee> allReports) {
-        if(allReports == null) { allReports = new ArrayList<>(); }
+        if(allReports == null) {
+            allReports = new ArrayList<>();
+        }
 
         if (directReports != null && !directReports.isEmpty()) {
+            
+            allReports.addAll(directReports);
 
-            List<String>directReportIds = directReports.stream().map(Employee::getEmployeeId).toList();
-
-            List<Employee> directReportsComplete = new ArrayList<>();
-            for (String directReportId : directReportIds) {
-                directReportsComplete.add(employeeServiceImpl.read(directReportId));
-            }
-            allReports.addAll(directReportsComplete);
-
-            List<Employee> subordinateReports = directReportsComplete.stream()
+            List<Employee> subordinateReports = directReports.stream()
                     .filter(employee -> employee.getDirectReports() != null && !employee.getDirectReports().isEmpty())
                     .map(Employee::getDirectReports)
                     .flatMap(List::stream)
