@@ -1,7 +1,6 @@
 package com.mindex.challenge.data;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Employee {
     private String employeeId;

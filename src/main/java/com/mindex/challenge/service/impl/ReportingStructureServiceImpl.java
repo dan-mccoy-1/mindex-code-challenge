@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReportingStructureServiceImpl implements ReportingStructureService {
@@ -49,13 +48,6 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
                 directReportsComplete.add(employeeServiceImpl.read(directReportId));
             }
             allReports.addAll(directReportsComplete);
-
-//            List<String> currentReportIds = currentReports.stream()
-//                    .filter(employee -> employee.getDirectReports() != null && !employee.getDirectReports().isEmpty())
-//                    .map(Employee::getDirectReports)
-//                    .flatMap(List::stream)
-//                    .distinct()
-//                    .collect(Collectors.toList());
 
             List<Employee> subordinateReports = directReportsComplete.stream()
                     .filter(employee -> employee.getDirectReports() != null && !employee.getDirectReports().isEmpty())
