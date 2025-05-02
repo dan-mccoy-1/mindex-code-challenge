@@ -29,6 +29,11 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         ReportingStructure reportingStructure = new ReportingStructure();
 
         Employee employee = employeeServiceImpl.read(employeeId);
+
+        if (employee == null) {
+            throw new RuntimeException("Invalid employeeId: " + employeeId);
+        }
+
         reportingStructure.setEmployee(employee);
 
         int numberOfReports ;
@@ -37,7 +42,6 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         } else {
             reportingStructure.setNumberOfReports(0);
         }
-
 
         return reportingStructure;
     }
