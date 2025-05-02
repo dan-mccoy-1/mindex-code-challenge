@@ -42,7 +42,6 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         }
 
         if (directReports != null && !directReports.isEmpty()) {
-            
             allReports.addAll(directReports);
 
             List<Employee> subordinateReports = directReports.stream()

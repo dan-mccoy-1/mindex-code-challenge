@@ -40,6 +40,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new RuntimeException("Invalid employeeId: " + id);
         }
 
+        // This feature provides two added pieces of functionality:
+        // - It replaces the incomplete directReport employee objects (which include their employeeId only) from the
+        //   database (see resources/static/employee_database.json) with complete employee objects
+        // - It Cascades down the direct report tree to return the full reports hierarchy (instead of just the first level)
         List<String>directReportIds = employee.getDirectReports().stream().map(Employee::getEmployeeId).toList();
         List<Employee> directReportsComplete = new ArrayList<>();
         for (String directReportId : directReportIds) {
