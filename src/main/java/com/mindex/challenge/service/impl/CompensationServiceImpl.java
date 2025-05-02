@@ -17,9 +17,6 @@ public class CompensationServiceImpl implements CompensationService {
     @Autowired
     private CompensationRepository compensationRepository;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;  // TODO: Use this to return whole employee
-
     @Override
     public Compensation create(Compensation compensation) {
         LOG.debug("Creating compensation [{}]", compensation);

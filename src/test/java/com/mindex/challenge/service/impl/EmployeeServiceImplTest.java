@@ -27,9 +27,6 @@ public class EmployeeServiceImplTest {
     private String employeeUrl;
     private String employeeIdUrl;
 
-    @Autowired
-    private EmployeeService employeeService;
-
     @LocalServerPort
     private int port;
 
@@ -49,7 +46,7 @@ public class EmployeeServiceImplTest {
         testEmployee.setLastName("Doe");
         testEmployee.setDepartment("Engineering");
         testEmployee.setPosition("Developer");
-        testEmployee.setDirectReports(new ArrayList<>());   // TODO: Why does the test fail without this?
+        testEmployee.setDirectReports(new ArrayList<>());
 
         // Create checks
         Employee createdEmployee = restTemplate.postForEntity(employeeUrl, testEmployee, Employee.class).getBody();

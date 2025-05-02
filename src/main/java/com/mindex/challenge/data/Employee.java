@@ -54,9 +54,11 @@ public class Employee {
         this.department = department;
     }
 
-    public List<String> getDirectReports() { return directReports; }
+    public List<String> getDirectReports() {
+        return directReports;
+    }
 
-    public void setDirectReports(List<Employee> directReports) {    // TODO: Use custom mapper for this?
+    public void setDirectReports(List<Employee> directReports) {
         this.directReports = directReports.stream()
                 .map(Employee::getEmployeeId)
                 .collect(Collectors.toList());

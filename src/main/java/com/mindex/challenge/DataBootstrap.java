@@ -18,7 +18,7 @@ public class DataBootstrap {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private ObjectMapper objectMapper;  // TODO: Create custom mapper for directReports?
+    private ObjectMapper objectMapper;
 
     @PostConstruct
     public void init() {
