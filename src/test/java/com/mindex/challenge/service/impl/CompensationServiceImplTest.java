@@ -37,12 +37,12 @@ public class CompensationServiceImplTest {
 
     @Test
     public void testCreateRead() {
-        String EmployeeId = UUID.randomUUID().toString();
-
+        // Test data
         Compensation testCompensation = new Compensation();
         testCompensation.setSalary(100000);
         testCompensation.setEffectiveDate(LocalDate.now());
-        testCompensation.setEmployeeId(EmployeeId);
+        testCompensation.setEmployeeId(UUID.randomUUID().toString());
+
 
         // Create checks
         Compensation createdCompensation = restTemplate.postForEntity(compensationUrl, testCompensation, Compensation.class).getBody();
@@ -54,6 +54,7 @@ public class CompensationServiceImplTest {
 
         // Read checks
         Compensation readCompensation = restTemplate.getForEntity(compensationEmployeeIdUrl, Compensation.class, createdCompensation.getEmployeeId()).getBody();
+
         assertNotNull(readCompensation);
         assertEquals(createdCompensation.getEmployeeId(), readCompensation.getEmployeeId());
         assertCompensationEquivalence(createdCompensation, readCompensation);

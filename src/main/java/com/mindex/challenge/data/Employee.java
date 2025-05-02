@@ -9,7 +9,7 @@ public class Employee {
     private String lastName;
     private String position;
     private String department;
-    private List<String> directReports;
+    private List<Employee> directReports;
 
     public Employee() {
     }
@@ -54,13 +54,11 @@ public class Employee {
         this.department = department;
     }
 
-    public List<String> getDirectReports() {
+    public List<Employee> getDirectReports() {
         return directReports;
     }
 
     public void setDirectReports(List<Employee> directReports) {
-        this.directReports = directReports.stream()
-                .map(Employee::getEmployeeId)
-                .collect(Collectors.toList());
+        this.directReports = directReports;
     }
 }

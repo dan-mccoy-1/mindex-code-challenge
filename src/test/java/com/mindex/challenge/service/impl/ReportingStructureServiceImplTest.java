@@ -13,6 +13,9 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -38,25 +41,46 @@ public class ReportingStructureServiceImplTest {
 
     @Test
     public void testGenerate() {
-        Employee testEmployee = new Employee();
-        testEmployee.setFirstName("John");
-        testEmployee.setLastName("Doe");
-        testEmployee.setDepartment("Engineering");
-        testEmployee.setPosition("Developer");
-        testEmployee.setDirectReports(new ArrayList<>());
+        // Test data
+        Employee testEmployee1 = new Employee();
+        testEmployee1.setFirstName("John");
+        testEmployee1.setLastName("Doe");
+        testEmployee1.setDepartment("Engineering");
+        testEmployee1.setPosition("Developer");
+        testEmployee1.setDirectReports(new ArrayList<>());
+        Employee createdEmployee1 = restTemplate.postForEntity(employeeUrl, testEmployee1, Employee.class).getBody();
 
-        // Create checks
-        Employee createdEmployee = restTemplate.postForEntity(employeeUrl, testEmployee, Employee.class).getBody();
-        assertNotNull(createdEmployee.getEmployeeId());
+        Employee testEmployee2 = new Employee();
+        testEmployee2.setFirstName("Jane");
+        testEmployee2.setLastName("Doe");
+        testEmployee2.setDepartment("Engineering");
+        testEmployee2.setPosition("Developer");
+        testEmployee2.setDirectReports(new ArrayList<>(List.of(createdEmployee1)));
+        Employee createdEmployee2 = restTemplate.postForEntity(employeeUrl, testEmployee2, Employee.class).getBody();
 
-        ReportingStructure testReportingStructure = new ReportingStructure();
-        testReportingStructure.setEmployee(createdEmployee);
-        testReportingStructure.setNumberOfReports(0);
+        Employee testEmployee3 = new Employee();
+        testEmployee3.setFirstName("Joe");
+        testEmployee3.setLastName("Doe");
+        testEmployee3.setDepartment("Engineering");
+        testEmployee3.setPosition("Developer");
+        testEmployee1.setDirectReports(new ArrayList<>());
+        Employee createdEmployee3 = restTemplate.postForEntity(employeeUrl, testEmployee3, Employee.class).getBody();
+
+        Employee testEmployee4 = new Employee();
+        testEmployee4.setFirstName("Jules");
+        testEmployee4.setLastName("Doe");
+        testEmployee4.setDepartment("Engineering");
+        testEmployee4.setPosition("Developer");
+        testEmployee4.setDirectReports(new ArrayList<>(List.of(createdEmployee3, createdEmployee2)));
+        Employee createdEmployee4 = restTemplate.postForEntity(employeeUrl, testEmployee4, Employee.class).getBody();
+
 
         // Generate checks
-        assertNotNull(createdEmployee);
-        assertNotNull(createdEmployee.getEmployeeId());
-        ReportingStructure generatedReportingStructure = restTemplate.getForEntity(reportingStructureUrl, ReportingStructure.class, createdEmployee.getEmployeeId()).getBody();
+        ReportingStructure testReportingStructure = new ReportingStructure();
+        testReportingStructure.setEmployee(createdEmployee4);
+        testReportingStructure.setNumberOfReports(3);
+
+        ReportingStructure generatedReportingStructure = restTemplate.getForEntity(reportingStructureUrl, ReportingStructure.class, createdEmployee4.getEmployeeId()).getBody();
 
         assertNotNull(generatedReportingStructure);
         assertReportingStructureEquivalence(testReportingStructure, generatedReportingStructure);

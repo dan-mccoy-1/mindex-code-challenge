@@ -41,12 +41,12 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void testCreateReadUpdate() {
+        // Test data
         Employee testEmployee = new Employee();
         testEmployee.setFirstName("John");
         testEmployee.setLastName("Doe");
         testEmployee.setDepartment("Engineering");
         testEmployee.setPosition("Developer");
-        testEmployee.setDirectReports(new ArrayList<>());
 
         // Create checks
         Employee createdEmployee = restTemplate.postForEntity(employeeUrl, testEmployee, Employee.class).getBody();
@@ -57,6 +57,7 @@ public class EmployeeServiceImplTest {
 
         // Read checks
         Employee readEmployee = restTemplate.getForEntity(employeeIdUrl, Employee.class, createdEmployee.getEmployeeId()).getBody();
+
         assertEquals(createdEmployee.getEmployeeId(), readEmployee.getEmployeeId());
         assertEmployeeEquivalence(createdEmployee, readEmployee);
 

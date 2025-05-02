@@ -37,24 +37,34 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         return reportingStructure;
     }
 
-    private List<Employee> listAllReports(List<String> directReportIds, List<Employee> allReports) {
+    private List<Employee> listAllReports(List<Employee> directReports, List<Employee> allReports) {
         if(allReports == null) { allReports = new ArrayList<>(); }
 
-        if (directReportIds != null && !directReportIds.isEmpty()) {
-            List<Employee> currentReports = new ArrayList<>();
-            for (String directReportId : directReportIds) {
-                currentReports.add(employeeServiceImpl.read(directReportId));
-            }
-            allReports.addAll(currentReports);
+        if (directReports != null && !directReports.isEmpty()) {
 
-            List<String> currentReportIds = currentReports.stream()
+            List<String>directReportIds = directReports.stream().map(Employee::getEmployeeId).toList();
+
+            List<Employee> directReportsComplete = new ArrayList<>();
+            for (String directReportId : directReportIds) {
+                directReportsComplete.add(employeeServiceImpl.read(directReportId));
+            }
+            allReports.addAll(directReportsComplete);
+
+//            List<String> currentReportIds = currentReports.stream()
+//                    .filter(employee -> employee.getDirectReports() != null && !employee.getDirectReports().isEmpty())
+//                    .map(Employee::getDirectReports)
+//                    .flatMap(List::stream)
+//                    .distinct()
+//                    .collect(Collectors.toList());
+
+            List<Employee> subordinateReports = directReportsComplete.stream()
                     .filter(employee -> employee.getDirectReports() != null && !employee.getDirectReports().isEmpty())
                     .map(Employee::getDirectReports)
                     .flatMap(List::stream)
                     .distinct()
-                    .collect(Collectors.toList());
+                    .toList();
 
-            listAllReports(currentReportIds, allReports);
+            listAllReports(subordinateReports, allReports);
         }
         return allReports;
     }
